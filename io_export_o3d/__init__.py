@@ -151,8 +151,8 @@ class ExportO3D(Operator):
         path = path.with_suffix(self.filename_ext)
 
         if context.preferences.addons[__package__].preferences.use_object_name:
-            stem: str = context.active_object.name
-            # object names are unrestricted UTF-8 strings, which are
+            stem: str = context.active_object.data.name
+            # mesh names are unrestricted UTF-8 strings, which are
             # unsafe for use as a filename - invalid characters are
             # removed and leading/trailing spaces/periods are stripped
             stem = re.sub(r"[\0-\x1F<>:\"\\/|?*]", "", stem).strip(". ")
@@ -286,12 +286,12 @@ class OMSI_Exporter_Preferences(AddonPreferences):
     bl_idname = __package__
 
     use_object_name: BoolProperty(
-        name="Get export filename from active object",
+        name="Get export filename from active mesh",
         description=(
-            "Use the active object's name as the export filename"
+            "Use the active mesh's name as the export filename"
             " instead of the blend file's name"
         ),
-        default=False,
+        default=True,
     )
 
     def draw(self, _: Context) -> None:
