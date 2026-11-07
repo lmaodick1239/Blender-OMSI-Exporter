@@ -236,7 +236,8 @@ class MaterialWrapper():
         self._uvmap: ShaderNodeUVMap | None = None
 
         # we don't want to try interpreting a node-less material's nodes
-        if not (self._material and self._material.use_nodes):
+        # (Material.use_nodes is deprecated: materials always have nodes)
+        if not (self._material and self._material.node_tree):
             return
         # get node tree
         tree: ShaderNodeTree = self._material.node_tree
